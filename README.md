@@ -5,7 +5,8 @@ los resultados a partir de la web [HTB Machines](https://htbmachines.github.io/)
 por [s4vitar](https://github.com/s4vitar).
 
 Este script está basado en las clases correspondientes y se ha añadido:
-- Un listado de las máquinas con un contador.
+- El archivo con la información de las máquinas se crea como oculto para que no sea visible por el usuario.
+- Un listado ordenado alfabéticamente de las máquinas con un contador.
 - Si el archivo no está actualizado, al hacerlo te indica la cantidad de máquinas nuevas.
 - Las búsquedas se pueden hacer tanto en mayúsculas como en minísculas.
 - Se ha añadido la búsqueda por certificaciones.
