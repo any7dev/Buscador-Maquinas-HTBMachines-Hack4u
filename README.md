@@ -14,8 +14,9 @@ Este script está basado en las clases correspondientes y se ha añadido:
 portapapeles su IP para comenzar el reconocimiento.
 
 ### USO
-1. `chmod +x buscador.sh`
-2. `.\buscador.sh`
+1. `git clone git@github.com:any7dev/Buscador-Maquinas-HTBMachines-Hack4u.git`
+2. `chmod +x buscador.sh`
+3. `.\buscador.sh`
 Con esto se accede al panel de ayuda con todas las opciones disponibles.    
   
 ###### *Se agradece cualquier sugerencia, mejora o corrección*:memo: 
