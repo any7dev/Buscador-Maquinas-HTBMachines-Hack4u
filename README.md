@@ -15,8 +15,9 @@ portapapeles su IP para comenzar el reconocimiento.
 
 ### USO
 1. `git clone git@github.com:any7dev/Buscador-Maquinas-HTBMachines-Hack4u.git`
-2. `chmod +x buscador.sh`
-3. `.\buscador.sh`
+2. `cd Buscador-Maquinas-HTBMachines-Hack4u`
+3. `chmod +x buscador.sh`
+4. `.\buscador.sh`
 Con esto se accede al panel de ayuda con todas las opciones disponibles.    
   
 ###### *Se agradece cualquier sugerencia, mejora o corrección*:memo: 
