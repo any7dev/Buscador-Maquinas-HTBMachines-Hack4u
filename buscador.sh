@@ -50,128 +50,173 @@ function archivo(){
 }
 
 function maquinas(){
-    maquinas="$(cat .bundle.js | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | tail -n +25 | sort | column)"
-    cantidad="$(cat .bundle.js | grep "so: " -C 6 | grep "dificultad: " -B6 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | wc -w)"
-    echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas y son:\n"
-    echo -e "${amarillo}$maquinas${fincolor}\n"
-
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
+    else
+        maquinas="$(cat .bundle.js | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | tail -n +25 | sort | column)"
+        cantidad="$(cat .bundle.js | grep "so: " -C 6 | grep "dificultad: " -B6 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | wc -w)"
+        echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas y son:\n"
+        echo -e "${amarillo}$maquinas${fincolor}\n"
+    fi
 }
 
 function porNombre(){
-    nombre="$1"
-    busquedaN="$(cat .bundle.js | awk "/name: \"$nombre\"/,/resuelta/" | grep -vE "name:|id:|sku:|resuelta:" | tr -d '"' | tr -d ',' | sed 's/^ *//')"
-    if [ "$busquedaN" ]; then
-        echo -e "${amarillo}$busquedaN${finColor}\n"
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
     else
-        echo -e "\n${rojo}No se ha encontrado la máquina${finColor}\n"
+        nombre="$1"
+        busquedaN="$(cat .bundle.js | awk "/name: \"$nombre\"/,/resuelta/" | grep -vE "name:|id:|sku:|resuelta:" | tr -d '"' | tr -d ',' | sed 's/^ *//')"
+        if [ "$busquedaN" ]; then
+            echo -e "${amarillo}$busquedaN${finColor}\n"
+        else
+            echo -e "\n${rojo}No se ha encontrado la máquina${finColor}\n"
+        fi
     fi
 }
 
 function porIP(){
-    ip="$1"
-    busquedaI="$(cat .bundle.js | grep "ip: \"$ip\"" -B 3 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',')"
-    if [ "$busquedaI" ]; then
-        echo -e "\nEl nombre de la máquina es ${amarillo}$busquedaI${finColor}\n"
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
     else
-        echo -e "\n${rojo}No se ha encontrado la IP${finColor}\n"
+        ip="$1"
+        busquedaI="$(cat .bundle.js | grep "ip: \"$ip\"" -B 3 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',')"
+        if [ "$busquedaI" ]; then
+            echo -e "\nEl nombre de la máquina es ${amarillo}$busquedaI${finColor}\n"
+        else
+            echo -e "\n${rojo}No se ha encontrado la IP${finColor}\n"
+        fi
     fi
 }
 
 function porSO(){
-    so="$1"
-    busquedaSO="$(cat .bundle.js | grep "so: \"$so\"" -i -B 6 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ','  | column)"
-    cantidad="$(echo $busquedaSO | wc -w)"
-    if [ "$busquedaSO" ]; then
-        echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas con este Sistema Operativo y son:\n"
-        echo -e "${amarillo}$busquedaSO${finColor}\n"
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
     else
-        echo -e "\n${rojo}No se ha encontrado el sistema operativo${finColor}\n"
+        so="$1"
+        busquedaSO="$(cat .bundle.js | grep "so: \"$so\"" -i -B 6 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ','  | column)"
+        cantidad="$(echo $busquedaSO | wc -w)"
+        if [ "$busquedaSO" ]; then
+            echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas con este Sistema Operativo y son:\n"
+            echo -e "${amarillo}$busquedaSO${finColor}\n"
+        else
+            echo -e "\n${rojo}No se ha encontrado el sistema operativo${finColor}\n"
+        fi
     fi
 }
 
 function porDificultad(){
-    dificultad="$1"
-    busquedaD="$(cat .bundle.js | grep "dificultad: \"$dificultad\"" -i -B5 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | column)"
-    cantidad="$(echo $busquedaD | wc -w)"
-    if [ "$busquedaD" ]; then
-        echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas con esta dificultad y son:\n"
-        echo -e "${amarillo}$busquedaD${finColor}\n"
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
     else
-        echo -e "\n${rojo}No se ha encontrado la dificultad${finColor}\n"
+        dificultad="$1"
+        busquedaD="$(cat .bundle.js | grep "dificultad: \"$dificultad\"" -i -B5 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | column)"
+        cantidad="$(echo $busquedaD | wc -w)"
+        if [ "$busquedaD" ]; then
+            echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas con esta dificultad y son:\n"
+            echo -e "${amarillo}$busquedaD${finColor}\n"
+        else
+            echo -e "\n${rojo}No se ha encontrado la dificultad${finColor}\n"
+        fi
     fi
 }
 
 function porSkill(){
-    skill="$1"
-    busquedaSk="$(cat .bundle.js | grep "skills: " -B 7 -A 1 | grep "$skill" -w -i -B 7 -A 1 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | column)"
-    cantidad="$(echo $busquedaSk | wc -w)"
-    if [ "$busquedaSk" ]; then
-        echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas con esta skill y son:\n"
-        echo -e "${amarillo}$busquedaSk${finColor}\n"
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
     else
-        echo -e "\n${rojo}No se ha encontrado la skill${finColor}\n"
+        skill="$1"
+        busquedaSk="$(cat .bundle.js | grep "skills: " -B 7 | grep "$skill" -w -i -B 7 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | column)"
+        cantidad="$(echo $busquedaSk | wc -w)"
+        if [ "$busquedaSk" ]; then
+            echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas con esta skill y son:\n"
+            echo -e "${amarillo}$busquedaSk${finColor}\n"
+        else
+            echo -e "\n${rojo}No se ha encontrado la skill${finColor}\n"
+        fi
     fi
 }
 
 function youtube(){
-    nombre="$1"
-    busquedaN="$(cat .bundle.js | grep "name: \"$nombre\"" -i -A 10 | grep "youtube" | awk 'NF{print $NF}' | tr -d '"' | tr -d ',')"
-    if [ "$busquedaN" ]; then
-        echo -e "\n${amarillo}$busquedaN${fincColor}\n"
-    else
-        echo -e "\n${rojo}No se ha encontrado la máquina${finColor}\n"
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
+        else
+        nombre="$1"
+        busquedaN="$(cat .bundle.js | grep "name: \"$nombre\"" -i -A 10 | grep "youtube" | awk 'NF{print $NF}' | tr -d '"' | tr -d ',')"
+        if [ "$busquedaN" ]; then
+            echo -e "\n${amarillo}$busquedaN${fincColor}\n"
+        else
+            echo -e "\n${rojo}No se ha encontrado la máquina${finColor}\n"
+        fi
     fi
 }
 
 function porSOyDI(){
-    so="$1"
-    dificultad="$2"
-    busquedaSOyDI="$(cat .bundle.js | grep "so: \"$so\"" -i -C 6 | grep "dificultad: \"$dificultad\"" -i -B6 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | column)"
-    cantidad="$(echo $busquedaSOyDI | wc -w)"
-    if [ "$busquedaSOyDI" ]; then
-        echo -e "\nLas máquinas encontradas con el sisteme operativo y dificultad introducidos son ${amarillo}$cantidad${finColor}:\n"
-        echo -e "${amarillo}$busquedaSOyDI${fincColor}\n" 
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
     else
-        echo -e "\n${rojo}No se ha encontrado el sistema operativo y/o la dificultad${finColor}\n"
+        so="$1"
+        dificultad="$2"
+        busquedaSOyDI="$(cat .bundle.js | grep "so: \"$so\"" -i -C 6 | grep "dificultad: \"$dificultad\"" -i -B6 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | column)"
+        cantidad="$(echo $busquedaSOyDI | wc -w)"
+        if [ "$busquedaSOyDI" ]; then
+            echo -e "\nLas máquinas encontradas con el sisteme operativo y dificultad introducidos son ${amarillo}$cantidad${finColor}:\n"
+            echo -e "${amarillo}$busquedaSOyDI${fincColor}\n" 
+        else
+            echo -e "\n${rojo}No se ha encontrado el sistema operativo y/o la dificultad${finColor}\n"
+        fi
     fi
 }
 
 function porCert(){
-    cert="$1"
-    busquedaCert="$(cat .bundle.js | grep "$cert" -w -i -B 10 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | column)"
-    cantidad="$(echo $busquedaCert | wc -w)"
-    if [ "$busquedaCert" ]; then
-        echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas con esta certificación y son:\n"
-        echo -e "${amarillo}$busquedaCert${finColor}\n"
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -u${finColor}\n"
     else
-      echo -e "\n${rojo}No se ha encontrado la certificación${finColor}\n"
+        cert="$1"
+        busquedaCert="$(cat .bundle.js | grep "$cert" -w -i -B 10 | grep "name: " | awk 'NF{print $NF}' | tr -d '"' | tr -d ',' | column)"
+        cantidad="$(echo $busquedaCert | wc -w)"
+        if [ "$busquedaCert" ]; then
+            echo -e "\nHay un total de ${amarillo}$cantidad${finColor} máquinas con esta certificación y son:\n"
+            echo -e "${amarillo}$busquedaCert${finColor}\n"
+        else
+            echo -e "\n${rojo}No se ha encontrado la certificación${finColor}\n"
+    fi
    fi
 }
 
 function ataque(){
-    nombre="$1"
-    mkdir ~/$nombre
-    echo -e "\nCreadro el directorio ${amarillo}~/$nombre${finColor}"
-    cd ~/$nombre
-    echo -e "Te he situado dentro de ese directorio"
-    IP="$(cat .bundle.js | awk "/name: \"$nombre\"/,/resuelta/" | grep -vE "name:|id:|sku:|resuelta:" | tr -d '"' | tr -d ',' | sed 's/^ *//' | grep "ip: " | awk 'NF{print $NF}')"
-    echo $IP | xclip -sel clip
-    echo -e "Tienes la IP de la máquina copiada al portapapeles\n"    
+    if [ ! -f .bundle.js ]; then
+        echo -e "\n${rojo}No se ha encontrado el archivo necesario, debes usar primero el parámetro -a${finColor}\n"
+    else
+        nombre="$1"
+        IP="$(cat .bundle.js | awk "/name: \"$nombre\"/,/resuelta/" | grep -vE "name:|id:|sku:|resuelta:" | tr -d '"' | tr -d ',' | sed 's/^ *//' | grep "ip: " | awk 'NF{print $NF}')"
+        if [ "$IP" ]; then
+            echo -e "Tienes la IP de la máquina copiada al portapapeles"   
+            echo $IP | xclip -sel clip
+            if [ ! -d ~/$nombre ]; then
+                mkdir ~/$nombre
+                echo -e "Creadro el directorio ${amarillo}~/$nombre${finColor}"
+            else
+                echo -e "${rojo}Ya existe un directorio con el nombre de la máquina${finColor}\n" 
+            fi
+        else
+            echo -e "\n${rojo}No se ha encontrado la máquina${finColor}\n"        
+        fi
+    fi     
 }
 
 function ayuda(){
-    echo -e "\nLos ${verde}parámetros${finColor} disponibles son:\n"
-    echo -e "\t${verde}-u${finColor} Para descargar o actualizar el ${verde}archivo${finColor} con las máquinas\n"
-    echo -e "\t${verde}-m${finColor} Para mostar ${verde}todas las máquinas${finColor} disponibles por orden alafbético\n"
-    echo -e "\t${verde}-n${finColor} Para buscar por el ${verde}nombre${finColor} de la máquina\n"
-    echo -e "\t${verde}-i${finColor} Para buscar por la ${verde}IP${finColor} de la máquina\n"
-    echo -e "\t${verde}-o${finColor} Para buscar por el ${verde}sistema operativo${finColor} de la máquina\n"
-    echo -e "\t${verde}-d${finColor} Para buscar por la ${verde}dificultad${finColor} de la máquina\n"
-    echo -e "\t${verde}-o${finColor} ${azul}sistema operativo${finColor} ${verde}-d${finColor} ${azul}dificultad${finColor} --> Para buscar por ${verde}sistema operativo y dificultad${finColor} de la máquina\n"
-    echo -e "\t${verde}-s${finColor} Para buscar por la ${verde}skill${finColor} de la máquina\n"
-    echo -e "\t${verde}-y${finColor} Para mostrar el ${verde}link de Youtube${finColor} de la resolución de la máquina\n"
-    echo -e "\t${verde}-c${finColor} Para buscar por ${verde}certificación${finColor}\n"
-    echo -e "\t${verde}-a${finColor} ${verde}Modo Ataque${finColor} --> Te crea un directorio con el nombre de la máquina que introduzcas como argumento y te copia en el portapapeles su IP\n"
+    echo -e "\nLos ${verde}parámetros${finColor} disponibles son:"
+    echo -e "\t${verde}-u${finColor} Para descargar o actualizar el ${verde}archivo${finColor} con las máquinas. Es la ${amarillo}primera opción${finColor} recomendada"
+    echo -e "\t${verde}-m${finColor} Para mostar ${verde}todas las máquinas${finColor} disponibles por orden alfabético"
+    echo -e "\t${verde}-n${finColor} Para buscar por el ${verde}nombre${finColor} de la máquina"
+    echo -e "\t${verde}-i${finColor} Para buscar por la ${verde}IP${finColor} de la máquina"
+    echo -e "\t${verde}-o${finColor} Para buscar por el ${verde}sistema operativo${finColor} de la máquina"
+    echo -e "\t${verde}-d${finColor} Para buscar por la ${verde}dificultad${finColor} de la máquina"
+    echo -e "\t${verde}-o${finColor} ${azul}sistema operativo${finColor} ${verde}-d${finColor} ${azul}dificultad${finColor} --> Para buscar por ${verde}sistema operativo y dificultad${finColor} de la máquina"
+    echo -e "\t${verde}-s${finColor} Para buscar por la ${verde}skill${finColor} de la máquina"
+    echo -e "\t${verde}-y${finColor} Para mostrar el ${verde}link de Youtube${finColor} de la resolución de la máquina"
+    echo -e "\t${verde}-c${finColor} Para buscar por ${verde}certificación${finColor}"
+    echo -e "\t${verde}-a${finColor} ${verde}Modo Ataque${finColor} --> Te crea un directorio con el nombre de la máquina que introduzcas como argumento y te copia en el portapapeles su IP"
     echo -e "\t${verde}-h Ayuda${finColor}\n"
 }
 
