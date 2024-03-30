@@ -11,7 +11,7 @@ Este script está basado en las clases correspondientes y se ha añadido:
 - Las búsquedas se pueden hacer tanto en mayúsculas como en minísculas (salvo en la búsqueda por nombre).
 - Se ha añadido la búsqueda por certificaciones.
 - Se ha añadido el modo ataque que te crea en el directo del usuario una carpeta con el nombre de la máquina indicada y te copia en el
-portapapeles su IP para comenzar el reconocimiento.
+portapapeles su IP para comenzar el reconocimiento. Si se añade al ejecutar `&& cd ~/Nombre de la máquina` te situará dentro de él.
 
 ### USO
 1. `git clone git@github.com:any7dev/Buscador-Maquinas-HTBMachines-Hack4u.git`
